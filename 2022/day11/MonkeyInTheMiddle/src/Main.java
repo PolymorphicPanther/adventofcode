@@ -7,7 +7,10 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) {
 
-        Function<Long, Long> worryChangeFunction = i -> i;
+        Function<Long, Long> worryChangeFunctionPt1 = i -> i / 3;
+        Function<Long, Long> worryChangeFunctionPt2 = i -> i % Monkey.moduloValue();
+
+        var worryChangeFunction = worryChangeFunctionPt2;
         new Monkey(
                 0,
                 new ArrayList<>(Stream.of(50, 70, 54, 83, 52, 78).toList()),
@@ -74,7 +77,7 @@ public class Main {
                 5,
                 3);
 
-        var rounds = 10000;
+        var rounds = 10_000;
 
 
         for (var i = 0; i < rounds; i++) {
@@ -133,7 +136,6 @@ class Monkey {
         for (Long startWorryLevel : startingItems) {
             var inspectWorryLevel = operation.apply(startWorryLevel);
             inspectWorryLevel = worryChangeFunction.apply(inspectWorryLevel);
-            inspectWorryLevel = inspectWorryLevel % moduloValue;
 
             var recipient = (inspectWorryLevel % test) == 0 ? passTrue : passFalse;
 
@@ -154,6 +156,10 @@ class Monkey {
 
     public int getId() {
         return id;
+    }
+
+    public static int moduloValue() {
+        return moduloValue;
     }
 
     public static List<Monkey> all() {
